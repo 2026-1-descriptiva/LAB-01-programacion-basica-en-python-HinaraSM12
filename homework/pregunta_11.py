@@ -4,7 +4,10 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+def _leer_datos():
+    with open("files/input/data.csv", "r", encoding="utf-8") as file:
+        return [line.strip().split("\t") for line in file if line.strip()]
+    
 
 def pregunta_11():
     """
@@ -16,3 +19,14 @@ def pregunta_11():
 
 
     """
+    datos = _leer_datos()
+    resultado = {}
+
+    for fila in datos:
+        valor = int(fila[1])
+        letras = fila[3].split(",")
+
+        for letra in letras:
+            resultado[letra] = resultado.get(letra, 0) + valor
+
+    return dict(sorted(resultado.items()))
